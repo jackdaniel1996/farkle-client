@@ -27,24 +27,10 @@ export class CreateLobby {
   password: string = ''; 
 
   createLobby() {
-    this.apiService.call('/lobby/create', {
-      lobbyName: this.lobbyName,
-      username: this.username,
-      password: this.password,
-    }, "post").subscribe((response: Lobby) => {
-      console.log('Lobby created:', response);
-      this.lobbyService.activeLobby.set(response);
-    });
+    this.lobbyService.createLobby(this.lobbyName, this.username, this.password);
   }
 
   joinLobby() {
-    this.apiService.call('/lobby/join', {
-      lobbyId: this.lobbyId,
-      username: this.username,
-      password: this.password,
-    }, "post").subscribe((response: Lobby) => {
-      console.log('Lobby joined:', response);
-      this.lobbyService.activeLobby.set(response);
-    });
+    this.lobbyService.joinLobby(this.lobbyId, this.username, this.password);
   }
 }
