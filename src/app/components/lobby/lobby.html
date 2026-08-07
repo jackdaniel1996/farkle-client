@@ -1,0 +1,6 @@
+<div class="lobby-wrapper">
+    <h3>Lobby</h3>
+    <div class="lobby-text">Lobby-Id: {{ lobbyService.activeLobby()?.lobbyId }}</div>
+    <div class="lobby-text">Lobby-Name: {{ lobbyService.activeLobby()?.lobbyName }}</div>
+    <div class="lobby-text">Spieler: {{ (lobbyService.activeLobby()?.players ?? []).length }}</div>
+</div>

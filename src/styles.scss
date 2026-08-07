@@ -1,0 +1,21 @@
+:root {
+    --primary-color: #2C3930;
+    --secondary-color: #3F4F44;
+    --tertiary-color: #A27B5C;
+    --color-light: #DCD7C9;
+
+    --font-germania: "Germania One", system-ui;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    background-color: var(--primary-color);
+    color: var(--color-light);
+    font-family: "Red Hat Display", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
