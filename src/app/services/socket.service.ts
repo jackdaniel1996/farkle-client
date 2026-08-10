@@ -25,14 +25,15 @@ export class SocketService {
         this.socket?.disconnect();
     }
 
-    joinLobby(lobbyId: string, username: string, password: string, socketId: string) {
-        this.socket?.emit("joinLobby", {
+    joinLobby(lobbyId: string, username: string, password: string, socketId: string, id?: string) {
+        const params = {
                 lobbyId,
                 username,
                 password,
-                socketId
+                socketId,
+                id
             }
-        );
+        this.socket?.emit("joinLobby", params);
     }
 
     onLobbyUpdated(callback: (lobby: Lobby) => void) {

@@ -10,6 +10,7 @@ export interface Lobby {
 
 export interface Player {
     id: string;
+    socketId: string;
     username: string;
 }
 
@@ -33,11 +34,13 @@ export class LobbyService {
             password: password,
             }, "post").subscribe({
                 next: (response: {lobby: Lobby, player: Player}) => {                    
-                    console.log('Lobby created:', response);
-                    this.activeLobby.set(response.lobby);
-                    this.player.set(response.player);
+                    const {lobby, player} = response;
+                    console.log('Lobby created:', response, lobby, player); 
 
-                    this.joinLobby(response.lobby.lobbyId, username, password);
+                    this.activeLobby.set(lobby);
+                    this.player.set(player);
+
+                    this.joinLobby(lobby.lobbyId, player.id, username, password);
 
                     resolve();              
                 }, error: (error) => {
@@ -48,7 +51,7 @@ export class LobbyService {
         })
     }
 
-    async joinLobby(lobbyId: string, username: string, password: string) {
+    async joinLobby(lobbyId: string, id: string | undefined, username: string, password: string) {
         // connect socket and join lobby after lobby creation
         await this.socketService.connect();
         this.socketService.onLobbyUpdated(lobby => {
