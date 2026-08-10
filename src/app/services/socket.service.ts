@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
-import { Lobby } from './lobby.service';
+import { Lobby, Player } from './lobby.service';
 
 
 @Injectable({
@@ -39,6 +39,13 @@ export class SocketService {
     onLobbyUpdated(callback: (lobby: Lobby) => void) {
         this.socket?.on(
             "lobbyUpdated",
+            callback
+        );
+    }
+
+    onLobbyJoined(callback: (player: Player) => void) {
+        this.socket?.on(
+            "joinedLobby",
             callback
         );
     }

@@ -31,6 +31,6 @@ export class CreateLobby {
   }
 
   joinLobby() {
-    this.lobbyService.joinLobby(this.lobbyId, undefined ,this.username, this.password);
+    this.lobbyService.joinLobby(this.lobbyId, undefined, this.username, this.password);
   }
 }

@@ -12,6 +12,7 @@ export interface Player {
     id: string;
     socketId: string;
     username: string;
+    connected?: boolean
 }
 
 @Injectable({
@@ -39,6 +40,7 @@ export class LobbyService {
 
                     this.activeLobby.set(lobby);
                     this.player.set(player);
+                    localStorage.setItem('playerId', player.id);
 
                     this.joinLobby(lobby.lobbyId, player.id, username, password);
 
@@ -69,12 +71,32 @@ export class LobbyService {
         const socket = this.socketService.socket;
         if (socket?.id) {
             console.log('socket', socket, lobbyId)
+
+            // new user joined
+            if(id === undefined && this.player() === null) {
+                this.socketService.onLobbyJoined(player => {
+                    this.player.set({
+                        id: player.id,
+                        socketId: player.socketId,
+                        username: player.username,
+                        connected: true,
+                    })                
+                    console.log('newUser:', this.player(), player.id)
+                    localStorage.setItem('playerId', player.id);
+                })
+            }
+
+            // try savedPlayerId when joining to reconnect
+            const savedPlayerId = localStorage.getItem('playerId') ?? undefined;
+
             this.socketService.joinLobby(
                 lobbyId,
                 username,
                 password,
-                socket.id
+                socket.id,
+                id ? id : savedPlayerId,
             );
         }
+
     }
 }
