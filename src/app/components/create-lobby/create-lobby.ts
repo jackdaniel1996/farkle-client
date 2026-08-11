@@ -26,11 +26,23 @@ export class CreateLobby {
   username: string = '';
   password: string = ''; 
 
+  error = signal<boolean>(false)
+
   createLobby() {
+    if (!this.lobbyName.trim() || !this.username.trim() || !this.password.trim()) {
+      this.error.set(true);
+      return;
+    }
+    this.error.set(false);
     this.lobbyService.createLobby(this.lobbyName, this.username, this.password);
   }
 
   joinLobby() {
+    if (!this.lobbyId.trim() || !this.username.trim() || !this.password.trim()) {
+      this.error.set(true);
+      return;
+    }
+    this.error.set(false);
     this.lobbyService.joinLobby(this.lobbyId, undefined, this.username, this.password);
   }
 }

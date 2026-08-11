@@ -2,6 +2,7 @@
     --primary-color: #2C3930;
     --secondary-color: #3F4F44;
     --tertiary-color: #A27B5C;
+    --tertiary-color-light: #c0926d;
     --color-light: #DCD7C9;
 
     --font-germania: "Germania One", system-ui;
@@ -18,4 +19,21 @@ body {
 
 * {
     box-sizing: border-box;
+}
+
+.btn {
+    margin-top: 20px;
+    color: inherit;
+    background: var(--tertiary-color);
+    border: 0;
+    font-family: "Germania One";
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+
+    &:hover {
+        cursor: pointer;
+        background: var(--tertiary-color-light);
+    }
 }

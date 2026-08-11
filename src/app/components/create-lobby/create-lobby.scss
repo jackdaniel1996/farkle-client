@@ -5,7 +5,7 @@
 .create-lobby-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     padding: 25px 0px 5px;
     width: 100%;
 }
@@ -87,4 +87,11 @@ h3 {
     font-family: inherit;
     font-size: 16px;
     font-weight: 600;
+}
+
+.error {
+    text-align: center;
+    padding: 15px 0 0px;
+    color: #ec3232;
+    font-weight: 500;
 }

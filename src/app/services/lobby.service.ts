@@ -1,11 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { SocketService } from './socket.service';
+import { Router } from '@angular/router';
 
 export interface Lobby {
     lobbyId: string;
     lobbyName: string;
     players: Player[];
+    status: 'waiting' | 'playing' | 'finished';
 }
 
 export interface Player {
@@ -22,6 +24,7 @@ export class LobbyService {
     constructor(
         private apiService: ApiService,
         private socketService: SocketService,
+        private router: Router,
     ) {}
 
     activeLobby = signal<Lobby | null>(null);
@@ -62,7 +65,8 @@ export class LobbyService {
                     ...current,            
                     lobbyId: lobby.lobbyId,
                     lobbyName: lobby.lobbyName,
-                    players: lobby.players
+                    players: lobby.players,
+                    status: lobby.status,
                 }
             });
             console.log('update lobby', this.activeLobby())
@@ -73,18 +77,20 @@ export class LobbyService {
             console.log('socket', socket, lobbyId)
 
             // new user joined
-            if(id === undefined && this.player() === null) {
-                this.socketService.onLobbyJoined(player => {
+            this.socketService.onLobbyJoined(player => {
+                if(id === undefined && this.player() === null) {
+                    // new player
                     this.player.set({
                         id: player.id,
                         socketId: player.socketId,
                         username: player.username,
                         connected: true,
                     })                
-                    console.log('newUser:', this.player(), player.id)
                     localStorage.setItem('playerId', player.id);
-                })
-            }
+                }
+
+                this.router.navigate(['/lobby']);
+            });
 
             // try savedPlayerId when joining to reconnect
             const savedPlayerId = localStorage.getItem('playerId') ?? undefined;

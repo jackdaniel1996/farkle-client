@@ -1,10 +1,27 @@
-<div class="lobby-wrapper">
-    <h3>Lobby</h3>
-    <div class="lobby-text">Lobby-Id: {{ lobbyService.activeLobby()?.lobbyId }}</div>
-    <div class="lobby-text">Lobby-Name: {{ lobbyService.activeLobby()?.lobbyName }}</div>
-    <div class="lobby-text">Spieler:
-        @for(player of lobbyPlayers(); track player.id) {
-        <span>{{ player.username }}</span>@if(!$last){,}
-        }
+<section class="lobby-container">
+    <div class="container">
+        <div class="lobby-wrapper">
+            <div class="headline">Farkle</div>
+            <div class="lobby-info-wrapper">
+                <h3>Lobby</h3>
+                <div class="lobby-infos">
+                    <div class="lobby-text">
+                        <div>Id:</div>
+                        <b>{{ lobbyService.activeLobby()?.lobbyId }}</b>
+                    </div>
+                    <div class="lobby-text">
+                        <div>Name:</div>
+                        <b>{{ lobbyService.activeLobby()?.lobbyName }}</b>
+                    </div>
+                </div>
+            </div>
+            <button class="btn">Spiel starten</button>
+        </div>
+        <div class="player-list">
+            <div class="lobby-text">Spieler:</div>
+            @for(player of lobbyPlayers(); track player.id) {
+            <div class="player-names">{{ player.username }}</div>
+            }
+        </div>
     </div>
-</div>
+</section>

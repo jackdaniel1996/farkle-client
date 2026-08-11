@@ -26,9 +26,13 @@
         <input class="input-field" type="password" placeholder="Passwort" [(ngModel)]="password" />
     </div>
 
+    @if(error()) {
+    <div class="error">Bitte fülle alle Felder aus.</div>
+    }
+
     @if(selection() == "create") {
-    <button class="send-button" (click)="createLobby()">Erstellen</button>
+    <button class="btn" (click)="createLobby()">Erstellen</button>
     } @else {
-    <button class="send-button" (click)="joinLobby()">Beitreten</button>
+    <button class="btn" (click)="joinLobby()">Beitreten</button>
     }
 </div>

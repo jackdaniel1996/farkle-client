@@ -7,7 +7,7 @@ import { LobbyComponent } from '../lobby/lobby';
   selector: 'app-home',
   imports: [
     CreateLobby,
-    LobbyComponent,
+    // LobbyComponent,
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',

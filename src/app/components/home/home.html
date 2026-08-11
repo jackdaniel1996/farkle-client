@@ -2,11 +2,7 @@
     <div class="selection-wrapper">
         <div class="headline">Farkle</div>
         <div class="container">
-            @if(lobbyService.activeLobby() == null) {
             <app-create-lobby></app-create-lobby>
-            } @else {
-            <app-lobby></app-lobby>
-            }
         </div>
     </div>
 </section>
