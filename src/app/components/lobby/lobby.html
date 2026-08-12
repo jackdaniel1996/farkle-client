@@ -1,4 +1,4 @@
-<section class="lobby-container">
+<!-- <section class="lobby-container">
     <div class="container">
         <div class="lobby-wrapper">
             <div class="headline">Farkle</div>
@@ -15,13 +15,25 @@
                     </div>
                 </div>
             </div>
-            <button class="btn">Spiel starten</button>
+            <button class="btn" (click)="startGame()">Spiel starten</button>
         </div>
-        <div class="player-list">
-            <div class="lobby-text">Spieler:</div>
-            @for(player of lobbyPlayers(); track player.id) {
-            <div class="player-names">{{ player.username }}</div>
-            }
+        <app-player-list></app-player-list>
+    </div>
+</section> -->
+
+<app-game-container [showPlayerList]="true">
+    <div class="lobby-info-wrapper">
+        <h3>Lobby</h3>
+        <div class="lobby-infos">
+            <div class="lobby-text">
+                <div>Id:</div>
+                <b>{{ lobbyService.activeLobby()?.lobbyId }}</b>
+            </div>
+            <div class="lobby-text">
+                <div>Name:</div>
+                <b>{{ lobbyService.activeLobby()?.lobbyName }}</b>
+            </div>
         </div>
     </div>
-</section>
+    <button class="btn" (click)="startGame()">Spiel starten</button>
+</app-game-container>

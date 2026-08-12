@@ -1,32 +1,3 @@
 :host {
     display: contents;
 }
-
-.home-section-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.selection-wrapper {
-    border: 2px solid var(--tertiary-color);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    min-width: 350px;
-}
-
-.container {
-    display: flex;
-    gap: 10px;
-    border-top: 2px solid var(--tertiary-color);
-}
-
-.headline {
-    font-family: var(--font-germania);
-    font-size: 3.5rem;
-    text-align: center;
-}

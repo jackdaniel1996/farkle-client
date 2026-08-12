@@ -1,0 +1,13 @@
+<section class="game-section">
+    <div class="container">
+        <div class="lobby-wrapper" [ngClass]="{'showPlayerList': showPlayerList}">
+            <div class="headline">Farkle</div>
+            <div class="lobby-info-wrapper">
+                <ng-content></ng-content>
+            </div>
+        </div>
+        @if(showPlayerList) {
+        <app-player-list></app-player-list>
+        }
+    </div>
+</section>

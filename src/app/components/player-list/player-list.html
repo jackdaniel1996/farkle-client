@@ -1,0 +1,6 @@
+<div class="player-list">
+    <div class="lobby-text">Spieler:</div>
+    @for(player of lobbyPlayers(); track player.id) {
+    <div class="player-names">{{ player.username }}</div>
+    }
+</div>

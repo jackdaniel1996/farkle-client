@@ -59,7 +59,7 @@ export class LobbyService {
     async joinLobby(lobbyId: string, id: string | undefined, username: string, password: string) {
         // connect socket and join lobby after lobby creation
         await this.socketService.connect();
-        this.socketService.onLobbyUpdated(lobby => {
+        this.socketService.onReceiveTask("lobbyUpdated", lobby => {
             this.activeLobby.update((current) => {
                 return {
                     ...current,            
@@ -76,8 +76,8 @@ export class LobbyService {
         if (socket?.id) {
             console.log('socket', socket, lobbyId)
 
-            // new user joined
-            this.socketService.onLobbyJoined(player => {
+            // user joined
+            this.socketService.onReceiveTask("joinedLobby", player => {
                 if(id === undefined && this.player() === null) {
                     // new player
                     this.player.set({
@@ -103,6 +103,14 @@ export class LobbyService {
                 id ? id : savedPlayerId,
             );
         }
+    }
 
+    startGame(lobbyId: string) {
+        this.socketService.onReceiveTask('gameStarted', (lobby: Lobby) => {
+            this.router.navigate(['/game']);
+            console.log('startGame', lobby)
+        });
+
+        this.socketService.onSendTask('startGame', {lobbyId})
     }
 }

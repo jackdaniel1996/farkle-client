@@ -36,17 +36,11 @@ export class SocketService {
         this.socket?.emit("joinLobby", params);
     }
 
-    onLobbyUpdated(callback: (lobby: Lobby) => void) {
-        this.socket?.on(
-            "lobbyUpdated",
-            callback
-        );
+    onSendTask(task: string, params: {}) {
+        this.socket?.emit(task, params);
     }
-
-    onLobbyJoined(callback: (player: Player) => void) {
-        this.socket?.on(
-            "joinedLobby",
-            callback
-        );
+    
+    onReceiveTask(task: string, callback: (param: any) => void) {
+        this.socket?.on(task, callback);
     }
 }
