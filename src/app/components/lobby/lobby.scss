@@ -7,32 +7,6 @@
     }
 }
 
-.lobby-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-}
-
-.lobby-wrapper {
-    border: 2px solid var(--tertiary-color);
-    border-radius: 10px 0px 0px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    min-width: 350px;
-}
-
-.headline {
-    font-family: var(--font-germania);
-    font-size: 3.5rem;
-    text-align: center;
-    border-bottom: 2px solid var(--tertiary-color);
-    padding-bottom: 20px;
-}
-
 .lobby-info-wrapper {
     display: flex;
     flex-direction: column;
@@ -48,9 +22,4 @@
 
 .lobby-text {
     font-size: 14px;
-}
-
-.container {
-    display: flex;
-    align-items: stretch;
 }

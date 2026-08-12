@@ -1,5 +1,6 @@
 import { Component, computed } from '@angular/core';
-import { LobbyService, Player } from '../../services/lobby.service';
+import { LobbyService } from '../../services/lobby.service';
+import { Player } from '../../shared/models';
 
 @Component({
   selector: 'app-player-list',

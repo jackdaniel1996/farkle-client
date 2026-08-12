@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
-import { Lobby, LobbyService } from '../../services/lobby.service';
+import { LobbyService } from '../../services/lobby.service';
 
 @Component({
   selector: 'app-create-lobby',

@@ -2,20 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { SocketService } from './socket.service';
 import { Router } from '@angular/router';
-
-export interface Lobby {
-    lobbyId: string;
-    lobbyName: string;
-    players: Player[];
-    status: 'waiting' | 'playing' | 'finished';
-}
-
-export interface Player {
-    id: string;
-    socketId: string;
-    username: string;
-    connected?: boolean
-}
+import { Lobby, Player } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
