@@ -54,6 +54,7 @@ export class LobbyService {
                     lobbyName: lobby.lobbyName,
                     players: lobby.players,
                     status: lobby.status,
+                    game: lobby.game,
                 }
             });
             console.log('update lobby', this.activeLobby())
@@ -95,7 +96,17 @@ export class LobbyService {
     startGame(lobbyId: string) {
         this.socketService.onReceiveTask('gameStarted', (lobby: Lobby) => {
             this.router.navigate(['/game']);
-            console.log('startGame', lobby)
+            this.activeLobby.update((current) => {
+                return {
+                    ...current,            
+                    lobbyId: lobby.lobbyId,
+                    lobbyName: lobby.lobbyName,
+                    players: lobby.players,
+                    status: lobby.status,
+                    game: lobby.game,
+                }
+            });
+            console.log('startGame', this.activeLobby())
         });
 
         this.socketService.onSendTask('startGame', {lobbyId})

@@ -1,0 +1,10 @@
+<button type="button" class="dice" [class.dice--rolling]="rolling()" [class.dice--held]="held()"
+    [class.dice--disabled]="disabled()" [disabled]="disabled()" [attr.aria-pressed]="held()"
+    [attr.aria-label]="'Würfel zeigt ' + dice().value + (held() ? ', gehalten' : '')" (click)="onClick()">
+    <svg viewBox="0 0 100 100" class="dice__face" aria-hidden="true">
+        <rect class="dice__body" x="4" y="4" width="92" height="92" rx="18" ry="18" />
+        @for (pip of pips(); track pip) {
+        <circle class="dice__pip" [attr.cx]="25 + pip[0] * 25" [attr.cy]="25 + pip[1] * 25" r="7.5" />
+        }
+    </svg>
+</button>

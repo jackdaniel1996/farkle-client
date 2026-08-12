@@ -11,11 +11,31 @@
     padding: 20px;
 }
 
-.player-names {
-    font-weight: 600;
+.player-name {
     font-size: 16px;
 }
 
 .lobby-text {
     font-size: 14px;
+}
+
+.player-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.player-active {
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    border: 1px solid var(--color-light);
+
+    &.active {
+        background-color: var(--secondary-color);
+    }
+
+    &.inactive {
+        background-color: var(--red);
+    }
 }

@@ -1,0 +1,116 @@
+:host {
+    display: inline-block;
+    --dice-size: 56px;
+    --dice-ivory: #f6efe1;
+    --dice-ivory-shadow: #d9cdb2;
+    --dice-pip: #2b2622;
+    --dice-held-accent: #c8962c;
+    --dice-held-glow: rgba(200, 150, 44, 0.35);
+}
+
+.dice {
+    appearance: none;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    width: var(--dice-size);
+    height: var(--dice-size);
+    perspective: 400px;
+    transition: transform 0.15s ease;
+
+    &:hover:not(.dice--disabled):not(.dice--rolling) {
+        transform: translateY(-2px);
+    }
+
+    &:active:not(.dice--disabled):not(.dice--rolling) {
+        transform: translateY(0) scale(0.96);
+    }
+
+    &--disabled {
+        cursor: default;
+        opacity: 0.45;
+    }
+}
+
+.dice__face {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 3px 0 var(--dice-ivory-shadow)) drop-shadow(0 5px 6px rgba(0, 0, 0, 0.25));
+}
+
+.dice__body {
+    fill: var(--dice-ivory);
+    stroke: var(--dice-ivory-shadow);
+    stroke-width: 2;
+    transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.dice__pip {
+    fill: var(--dice-pip);
+}
+
+// Held / scored die — set aside by the player, marked with a warm accent ring.
+.dice--held {
+    .dice__body {
+        stroke: var(--dice-held-accent);
+        stroke-width: 4;
+    }
+
+    .dice__face {
+        filter: drop-shadow(0 0 6px var(--dice-held-glow)) drop-shadow(0 3px 0 var(--dice-ivory-shadow));
+    }
+}
+
+// Rolling — a quick tumble; each die staggers slightly via nth-child so a
+// row of dice doesn't move in unison.
+.dice--rolling {
+    .dice__face {
+        animation: dice-tumble 0.6s ease-in-out;
+    }
+}
+
+:host(:nth-child(2n)) .dice--rolling .dice__face {
+    animation-delay: 0.05s;
+}
+
+:host(:nth-child(3n)) .dice--rolling .dice__face {
+    animation-delay: 0.1s;
+}
+
+@keyframes dice-tumble {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    20% {
+        transform: rotate(-25deg) scale(1.05);
+    }
+
+    40% {
+        transform: rotate(70deg) scale(0.95);
+    }
+
+    60% {
+        transform: rotate(-40deg) scale(1.05);
+    }
+
+    80% {
+        transform: rotate(15deg) scale(0.98);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dice,
+    .dice__face,
+    .dice__body {
+        animation: none !important;
+        transition: none !important;
+    }
+}
