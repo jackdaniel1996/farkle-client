@@ -19,7 +19,7 @@ export class DiceComponent {
   held = input<boolean>(false);
   disabled = input<boolean>(false);
 
-  diceClick = output<void>();
+  diceClick = output<number>();
 
   /** Pip layout per face, as [x, y] grid coordinates on a 3x3 grid (0-2). */
   private readonly pipLayouts: Record<DiceValue, Array<[number, number]>> = {
@@ -62,6 +62,6 @@ export class DiceComponent {
     if (this.disabled() || this.rolling()) {
       return;
     }
-    this.diceClick.emit();
+    this.diceClick.emit(this.dice().id);
   }
 }

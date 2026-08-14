@@ -47,17 +47,7 @@ export class LobbyService {
         // connect socket and join lobby after lobby creation
         await this.socketService.connect();
         this.socketService.onReceiveTask("lobbyUpdated", lobby => {
-            this.activeLobby.update((current) => {
-                return {
-                    ...current,            
-                    lobbyId: lobby.lobbyId,
-                    lobbyName: lobby.lobbyName,
-                    players: lobby.players,
-                    status: lobby.status,
-                    game: lobby.game,
-                }
-            });
-            console.log('update lobby', this.activeLobby())
+            this.updateLobby(lobby);
         });
 
         const socket = this.socketService.socket;
@@ -93,22 +83,21 @@ export class LobbyService {
         }
     }
 
-    startGame(lobbyId: string) {
-        this.socketService.onReceiveTask('gameStarted', (lobby: Lobby) => {
-            this.router.navigate(['/game']);
-            this.activeLobby.update((current) => {
-                return {
-                    ...current,            
-                    lobbyId: lobby.lobbyId,
-                    lobbyName: lobby.lobbyName,
-                    players: lobby.players,
-                    status: lobby.status,
-                    game: lobby.game,
-                }
-            });
-            console.log('startGame', this.activeLobby())
+    updateLobby(lobby: Lobby) {
+        this.activeLobby.update((current) => {
+            return {
+                ...current,            
+                lobbyId: lobby.lobbyId,
+                lobbyName: lobby.lobbyName,
+                players: lobby.players,
+                status: lobby.status,
+                game: lobby.game,
+            }
         });
+        console.log('update lobby', this.activeLobby())
+    }
 
+    startGame(lobbyId: string) {  
         this.socketService.onSendTask('startGame', {lobbyId})
     }
 }

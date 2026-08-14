@@ -38,4 +38,9 @@ body {
         cursor: pointer;
         background: var(--tertiary-color-light);
     }
+
+    &[disabled] {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
 }
