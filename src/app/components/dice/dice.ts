@@ -14,6 +14,7 @@ export class DiceComponent {
     id: 0,
     value: Math.floor(Math.random() * 6) + 1 as DiceValue,
     selected: false,
+    selectable: false,
   });
   rolling = input<boolean>(false);
   held = input<boolean>(false);

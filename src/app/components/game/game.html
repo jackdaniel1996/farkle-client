@@ -14,14 +14,23 @@
     @if((game()?.dice ?? []).length > 0) {
     <section class="dice-section">
         <div class="dice-container selected-dice">
-            @for(dice of selectedDice(); track dice.id) {
-            <app-dice [dice]="dice" [held]="dice.selected"></app-dice>
+            @for(dice of game()?.dice; track dice.id) {
+            @if(dice.selected) {
+            <app-dice [dice]="dice" [held]="dice.selected" (diceClick)="onUnselectDice($event)"></app-dice>
+            } @else {
+            <div class="dice-placeholder"></div>
+            }
             }
         </div>
         <div class="dice-container">
             @for(dice of game()?.dice; track dice.id) {
-            <app-dice [dice]="dice" [held]="selectedDiceIds().includes(dice.id)" [rolling]="rolling()"
-                (diceClick)="onClickDice($event)"></app-dice>
+            @if(dice.selected) {
+            <div class="dice-placeholder"></div>
+            }
+            @else {
+            <app-dice [dice]="dice" [rolling]="rolling()" (diceClick)="onSelectDice($event)"
+                [disabled]="!dice.selectable"></app-dice>
+            }
             }
         </div>
     </section>

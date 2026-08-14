@@ -41,4 +41,5 @@ export interface Dice {
   id: number;
   value: DiceValue;
   selected: boolean;
+  selectable: boolean;
 }

@@ -27,7 +27,6 @@ export class Game implements OnInit {
   selectedDice = computed(() => this.game()?.dice.filter((d) => d.selected));
 
   rolling = signal<boolean>(false)
-  selectedDiceIds = signal<number[]>([]);
 
   constructor(
     public lobbyService: LobbyService,
@@ -37,10 +36,14 @@ export class Game implements OnInit {
   }
 
   ngOnInit() {
-    this.socketService.onReceiveTask("diceRolled", lobby => {
-      this.lobbyService.updateLobby(lobby);
+    this.socketService.onReceiveTask("diceRolled", gameState => {
+      this.lobbyService.updateGamestate(gameState);
       this.rolling.set(true);
       setTimeout(() => {this.rolling.set(false)}, 600)
+    });
+
+    this.socketService.onReceiveTask("diceSelection", gameState => {
+      this.lobbyService.updateGamestate(gameState);
     });
   }
 
@@ -51,11 +54,17 @@ export class Game implements OnInit {
     }
   }
 
-  onClickDice(diceId: number) {
-    if(this.selectedDiceIds().includes(diceId)){
-      this.selectedDiceIds.update((current) => current.filter(c => c !== diceId))
-    } else {
-      this.selectedDiceIds.update((current) => [...current, diceId])
+  onSelectDice(diceId: number) {
+    const lobby = this.lobbyService.activeLobby();
+    if(lobby) {
+      this.gameService.selectDice(lobby.lobbyId, diceId);
+    }
+  }
+
+  onUnselectDice(diceId: number) {
+    const lobby = this.lobbyService.activeLobby();
+    if(lobby) {
+      this.gameService.unselectDice(lobby.lobbyId, diceId);
     }
   }
 }

@@ -12,4 +12,12 @@ export class GameService {
     rollDice(lobbyId: string) {
         this.socketService.onSendTask('rollDice', {lobbyId});
     }
+
+    selectDice(lobbyId: string, diceId: number) {
+        this.socketService.onSendTask('selectDice', {lobbyId, diceId});
+    }
+
+    unselectDice(lobbyId: string, diceId: number) {
+        this.socketService.onSendTask('unselectDice', {lobbyId, diceId});
+    }
 }

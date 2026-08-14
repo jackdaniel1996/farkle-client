@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { SocketService } from './socket.service';
 import { Router } from '@angular/router';
-import { Lobby, Player } from '../shared/models';
+import { GameState, Lobby, Player } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -95,6 +95,17 @@ export class LobbyService {
             }
         });
         console.log('update lobby', this.activeLobby())
+    }
+
+    updateGamestate(gameState: GameState) {
+        this.activeLobby.update((current) => {
+            if (current === null) return null;
+            return {
+                ...current,            
+                game: gameState,
+            }
+        });
+        console.log('update gamestate', this.activeLobby())
     }
 
     startGame(lobbyId: string) {  
