@@ -1,10 +1,30 @@
 <div class="player-list">
-    <div class="lobby-text">Spielerliste:</div>
+    <div class="player-row">
+        <div class="lobby-text">Spieler</div>
+        @if(showScoreboard) {
+        <div class="lobby-text">Punkte</div>
+        }
+    </div>
+    @if(showScoreboard) {
+    @for(player of lobbyService.activeLobby()?.game?.players; track player.id) {
+    <div class="player-row">
+        <div class="player-wrapper">
+            <div class="player-active {{ player.connected ? 'active': 'inactive'}}"></div>
+            <div class="player-name">{{ player.username }}</div>
+        </div>
+        @if(showScoreboard) {
+        <div class="player-score">{{ player.score }}</div>
+        }
+    </div>
+    }
+    } @else {
     @for(player of lobbyService.activeLobby()?.players; track player.id) {
     <div class="player-row">
-        <div class="player-active {{ player.connected ? 'active': 'inactive'}}"></div>
-        <div class="player-name">{{ player.username }}</div>
-        <div class="player-score">0</div>
+        <div class="player-wrapper">
+            <div class="player-active {{ player.connected ? 'active': 'inactive'}}"></div>
+            <div class="player-name">{{ player.username }}</div>
+        </div>
     </div>
+    }
     }
 </div>

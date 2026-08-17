@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { SocketService } from "./socket.service";
+import { Dice } from "../shared/models";
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,13 @@ export class GameService {
 
     unselectDice(lobbyId: string, diceId: number) {
         this.socketService.onSendTask('unselectDice', {lobbyId, diceId});
+    }
+
+    scoreDice(lobbyId: string, dice: number[]) {
+        this.socketService.onSendTask('scoreDice', {lobbyId, dice});
+    }
+
+    endTurn(lobbyId: string, dice: number[]) {
+        this.socketService.onSendTask('endTurn', {lobbyId, dice});
     }
 }

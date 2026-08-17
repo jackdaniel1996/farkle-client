@@ -38,6 +38,8 @@
 
     &.selected-dice {
         background: transparent;
+        outline: 2px solid var(--secondary-color);
+        outline-offset: -2px;
     }
 }
 

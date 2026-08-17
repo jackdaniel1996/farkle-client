@@ -1,4 +1,4 @@
-<app-game-container [showPlayerList]="true">
+<app-game-container [showPlayerList]="true" [showScoreboard]="true">
     <div class="active-player-container">{{ (activePlayer()?.username ?? '') }} ist am Zug!</div>
     <div class="scoreboard">
         <div>
@@ -11,12 +11,15 @@
         </div>
     </div>
 
+    <app-hint-container [game]="game()"></app-hint-container>
+
     @if((game()?.dice ?? []).length > 0) {
     <section class="dice-section">
         <div class="dice-container selected-dice">
             @for(dice of game()?.dice; track dice.id) {
             @if(dice.selected) {
-            <app-dice [dice]="dice" [held]="dice.selected" (diceClick)="onUnselectDice($event)"></app-dice>
+            <app-dice [dice]="dice" [held]="dice.selected" (diceClick)="onUnselectDice($event)"
+                [disabled]="dice.scored"></app-dice>
             } @else {
             <div class="dice-placeholder"></div>
             }
@@ -36,13 +39,12 @@
     </section>
     }
 
+    @if(activePlayer()?.id == lobbyService.player()?.id) {
     @if(!game()?.rolled) {
-    <button class="btn" [disabled]="activePlayer()?.id != lobbyService.player()?.id"
-        (click)="rollDice()">Würfeln</button>
+    <button class="btn" (click)="rollDice()">Würfeln</button>
     } @else {
-    <button class="btn" (click)="rollDice()">Erneut würfeln</button>
-    <button class="btn">Runde beenden</button>
+    <button class="btn" (click)="onScoreDice()" [disabled]="game()?.farkled">Sichern & erneut würfeln</button>
+    <button class="btn" (click)="onEndTurn()">Runde beenden</button>
     }
-
-
+    }
 </app-game-container>
