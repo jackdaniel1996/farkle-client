@@ -25,30 +25,6 @@ h3 {
     border-radius: 5px;
 }
 
-.input-field {
-    font-family: inherit;
-    padding: 8px 5px;
-    border-radius: 5px;
-    border: 0;
-    background: var(--color-light);
-    font-size: 14px;
-
-    &:focus-visible {
-        outline: 2px solid var(--tertiary-color);
-    }
-}
-
-.input-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.input-label {
-    font-size: 12px;
-    font-weight: 100;
-}
-
 .button-wrapper {
     display: flex;
     gap: 10px;

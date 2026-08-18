@@ -14,6 +14,7 @@
 
 .player-name {
     font-size: 16px;
+    line-height: 15px;
 }
 
 .lobby-text {
@@ -21,6 +22,14 @@
 }
 
 .player-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: start;
+    gap: 10px;
+    align-items: center;
+}
+
+.player-wrapper {
     display: flex;
     gap: 5px;
     align-items: center;

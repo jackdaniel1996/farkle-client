@@ -3,12 +3,13 @@ import { GameContainer } from "../game-container/game-container";
 import { LobbyService } from '../../services/lobby.service';
 import { DiceComponent } from '../dice/dice';
 import { GameService } from '../../services/game.service';
-import { Lobby } from '../../shared/models';
+import { Dice, Lobby } from '../../shared/models';
 import { SocketService } from '../../services/socket.service';
+import { HintContainer } from '../hint-container/hint-container';
 
 @Component({
   selector: 'app-game',
-  imports: [GameContainer, DiceComponent],
+  imports: [GameContainer, DiceComponent, HintContainer],
   templateUrl: './game.html',
   styleUrl: './game.scss',
 })
@@ -26,7 +27,7 @@ export class Game implements OnInit {
   });
   selectedDice = computed(() => this.game()?.dice.filter((d) => d.selected));
 
-  rolling = signal<boolean>(false)
+  rolling = signal<boolean>(false);
 
   constructor(
     public lobbyService: LobbyService,
@@ -37,12 +38,17 @@ export class Game implements OnInit {
 
   ngOnInit() {
     this.socketService.onReceiveTask("diceRolled", gameState => {
+      console.log('dice-rolled:', gameState);
       this.lobbyService.updateGamestate(gameState);
       this.rolling.set(true);
       setTimeout(() => {this.rolling.set(false)}, 600)
     });
 
     this.socketService.onReceiveTask("diceSelection", gameState => {
+      this.lobbyService.updateGamestate(gameState);
+    });
+
+    this.socketService.onReceiveTask("turnEnded", gameState => {
       this.lobbyService.updateGamestate(gameState);
     });
   }
@@ -65,6 +71,20 @@ export class Game implements OnInit {
     const lobby = this.lobbyService.activeLobby();
     if(lobby) {
       this.gameService.unselectDice(lobby.lobbyId, diceId);
+    }
+  }
+
+  onScoreDice() {
+    const lobby = this.lobbyService.activeLobby();
+    if(lobby) {
+      this.gameService.scoreDice(lobby.lobbyId);
+    }
+  }
+
+  onEndTurn() {
+    const lobby = this.lobbyService.activeLobby();
+    if(lobby) {
+      this.gameService.endTurn(lobby.lobbyId);
     }
   }
 }

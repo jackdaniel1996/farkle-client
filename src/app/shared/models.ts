@@ -15,17 +15,13 @@ export interface Player {
 
 export interface GameState {
   status: "waiting" | "playing" | "finished";
-
   players: GamePlayer[];
-
   currentPlayerId: string;
-
   dice: Dice[];
-
   turnScore: number;
-  // totalScores: Record<string, number>;
-
   rolled: boolean;
+  farkled: boolean;
+  maxPoints: number;
 }
 
 export interface GamePlayer {
@@ -42,4 +38,5 @@ export interface Dice {
   value: DiceValue;
   selected: boolean;
   selectable: boolean;
+  scored: boolean;
 }
