@@ -22,11 +22,11 @@ export class GameService {
         this.socketService.onSendTask('unselectDice', {lobbyId, diceId});
     }
 
-    scoreDice(lobbyId: string, dice: number[]) {
-        this.socketService.onSendTask('scoreDice', {lobbyId, dice});
+    scoreDice(lobbyId: string) {
+        this.socketService.onSendTask('scoreDice', {lobbyId});
     }
 
-    endTurn(lobbyId: string, dice: number[]) {
-        this.socketService.onSendTask('endTurn', {lobbyId, dice});
+    endTurn(lobbyId: string) {
+        this.socketService.onSendTask('endTurn', {lobbyId});
     }
 }

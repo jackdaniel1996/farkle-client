@@ -28,7 +28,6 @@ export class Game implements OnInit {
   selectedDice = computed(() => this.game()?.dice.filter((d) => d.selected));
 
   rolling = signal<boolean>(false);
-  scoringDice: number[] = [];
 
   constructor(
     public lobbyService: LobbyService,
@@ -65,10 +64,6 @@ export class Game implements OnInit {
     const lobby = this.lobbyService.activeLobby();
     if(lobby) {
       this.gameService.selectDice(lobby.lobbyId, diceId);
-      const dice = this.game()?.dice.find((d) => d.id === diceId);
-      if(dice){
-        this.scoringDice.push(dice.id);
-      }
     }
   }
 
@@ -76,25 +71,20 @@ export class Game implements OnInit {
     const lobby = this.lobbyService.activeLobby();
     if(lobby) {
       this.gameService.unselectDice(lobby.lobbyId, diceId);
-
-      this.scoringDice = this.scoringDice.filter(d => d !== diceId);      
     }
   }
 
   onScoreDice() {
     const lobby = this.lobbyService.activeLobby();
     if(lobby) {
-      this.gameService.scoreDice(lobby.lobbyId, this.scoringDice);
-
-      this.scoringDice = [];
+      this.gameService.scoreDice(lobby.lobbyId);
     }
   }
 
   onEndTurn() {
     const lobby = this.lobbyService.activeLobby();
     if(lobby) {
-      this.gameService.endTurn(lobby.lobbyId, this.scoringDice);
-      this.scoringDice = [];
+      this.gameService.endTurn(lobby.lobbyId);
     }
   }
 }
