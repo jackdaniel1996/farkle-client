@@ -1,14 +1,14 @@
 <section class="hint-container">
-    @if(game?.farkled) {
+    @if(game()?.farkled) {
     <span>
         Gefarkled! Es gibt keine auswählbaren Würfel.
     </span>
     } @else {
-    @if(!game?.rolled) {
+    @if(!game()?.rolled) {
     <span>{{ (activePlayer()?.username ?? '') }} muss würfeln.</span>
     }
-    @if(game?.rolled) {
-    <span>Würfel auswählen:</span>
+    @if(game()?.rolled) {
+    <span>Auswählbare Würfel: {{ selectableDice() }}</span>
     }
     }
 </section>
