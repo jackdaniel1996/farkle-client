@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { LobbyService} from '../../services/lobby.service';
 import { GameContainer } from "../game-container/game-container";
 import { SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
 import { Lobby } from '../../shared/models';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lobby',
-  imports: [GameContainer],
+  imports: [GameContainer, FormsModule],
   templateUrl: './lobby.html',
   styleUrl: './lobby.scss',
 })
 export class LobbyComponent implements OnInit {
+  maxPoints = signal<number>(10000);
 
   constructor(
     public lobbyService: LobbyService,
@@ -41,7 +43,7 @@ export class LobbyComponent implements OnInit {
   startGame() {
     const lobby = this.lobbyService.activeLobby();
     if(lobby) {
-      this.lobbyService.startGame(lobby.lobbyId)
+      this.lobbyService.startGame(lobby.lobbyId, this.maxPoints())
     }
   }
 }

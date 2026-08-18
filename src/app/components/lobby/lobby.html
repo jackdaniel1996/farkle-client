@@ -12,5 +12,11 @@
             </div>
         </div>
     </div>
+
+    <div class="input-wrapper">
+        <label class="input-label">Punkte zum Sieg</label>
+        <input class="input-field" type="number" placeholder="Punkte zum Sieg" [(ngModel)]="maxPoints" />
+    </div>
+
     <button class="btn" (click)="startGame()">Spiel starten</button>
 </app-game-container>

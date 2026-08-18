@@ -108,7 +108,7 @@ export class LobbyService {
         console.log('update gamestate', this.activeLobby())
     }
 
-    startGame(lobbyId: string) {  
-        this.socketService.onSendTask('startGame', {lobbyId})
+    startGame(lobbyId: string, maxPoints: number) {  
+        this.socketService.onSendTask('startGame', {lobbyId, maxPoints})
     }
 }
