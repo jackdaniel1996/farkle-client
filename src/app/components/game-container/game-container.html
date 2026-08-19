@@ -1,5 +1,5 @@
 <section class="game-section">
-    <div class="container">
+    <div class="container" [ngClass]="{'scoreboard': showScoreboard}">
         <div class="lobby-wrapper" [ngClass]="{'showPlayerList': showPlayerList}">
             <div class="headline">Farkle</div>
             <div class="lobby-info-wrapper">
