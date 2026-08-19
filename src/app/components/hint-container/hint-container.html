@@ -1,4 +1,7 @@
 <section class="hint-container">
+    @if(game()?.status === 'finished') {
+    Das Spiel ist vorbei, {{ (activePlayer()?.username ?? '') }} hat gewonnen!
+    } @else {
     @if(game()?.farkled) {
     <span>
         Gefarkled! Es gibt keine auswählbaren Würfel.
@@ -9,6 +12,7 @@
     }
     @if(game()?.rolled) {
     <span>Auswählbare Würfel: {{ selectableDice() }}</span>
+    }
     }
     }
 </section>

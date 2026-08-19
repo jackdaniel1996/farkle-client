@@ -39,12 +39,20 @@
     </section>
     }
 
-    @if(activePlayer()?.id == lobbyService.player()?.id) {
+    @if(activePlayer()?.id == lobbyService.player()?.id && (game()?.status === 'playing' || game()?.status ===
+    'waiting')) {
     @if(!game()?.rolled) {
     <button class="btn" (click)="rollDice()">Würfeln</button>
     } @else {
-    <button class="btn" (click)="onScoreDice()" [disabled]="game()?.farkled">Sichern & erneut würfeln</button>
+    <button class="btn" (click)="onScoreDice()" [disabled]="game()?.farkled">Punkten & erneut würfeln</button>
     <button class="btn" (click)="onEndTurn()">Runde beenden</button>
     }
+    } @else if(game()?.status === 'finished') {
+    <button class="btn" (click)="onRestartGame()">Spiel neustarten</button>
+    <button class="btn" (click)="onEndGame()">Beenden</button>
     }
 </app-game-container>
+
+@if(game()?.status === 'finished') {
+<app-confetti></app-confetti>
+}

@@ -1,15 +1,16 @@
-import { Component, computed, effect, OnInit, signal, untracked } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { GameContainer } from "../game-container/game-container";
 import { LobbyService } from '../../services/lobby.service';
 import { DiceComponent } from '../dice/dice';
 import { GameService } from '../../services/game.service';
-import { Dice, Lobby } from '../../shared/models';
 import { SocketService } from '../../services/socket.service';
 import { HintContainer } from '../hint-container/hint-container';
+import { Confetti } from '../confetti/confetti';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
-  imports: [GameContainer, DiceComponent, HintContainer],
+  imports: [GameContainer, DiceComponent, HintContainer, Confetti],
   templateUrl: './game.html',
   styleUrl: './game.scss',
 })
@@ -33,6 +34,7 @@ export class Game implements OnInit {
     public lobbyService: LobbyService,
     private gameService: GameService,
     private socketService: SocketService,
+    private router: Router,
   ) {
   }
 
@@ -49,6 +51,10 @@ export class Game implements OnInit {
     });
 
     this.socketService.onReceiveTask("turnEnded", gameState => {
+      this.lobbyService.updateGamestate(gameState);
+    });
+
+    this.socketService.onReceiveTask("gameRestartet", gameState => {
       this.lobbyService.updateGamestate(gameState);
     });
   }
@@ -86,5 +92,17 @@ export class Game implements OnInit {
     if(lobby) {
       this.gameService.endTurn(lobby.lobbyId);
     }
+  }
+
+  onRestartGame() {
+    const lobby = this.lobbyService.activeLobby();
+    if(lobby) {
+      this.gameService.restartGame(lobby.lobbyId);
+    }
+  }
+
+  onEndGame() {
+    this.socketService.disconnect();
+    this.router.navigate(['/']);
   }
 }
