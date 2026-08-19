@@ -6,13 +6,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: 100dvh;
     width: 100%;
+    padding: 10px;
 }
 
 .container {
     display: flex;
     align-items: stretch;
+    justify-content: center;
+
+    &.scoreboard {
+        flex-direction: column;
+    }
 }
 
 .lobby-wrapper {
@@ -27,6 +33,10 @@
     &.showPlayerList {
         border-radius: 10px 0px 0px 10px
     }
+
+    .scoreboard & {
+        border-radius: 10px 10px 0px 0px;
+    }
 }
 
 .headline {
@@ -40,4 +50,23 @@
 .lobby-info-wrapper {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 400px;
+    }
+
+    .lobby-wrapper {
+        width: 100%;
+        min-width: 0;
+
+        &.showPlayerList {
+            border-radius: 10px 10px 0px 0px;
+        }
+    }
 }

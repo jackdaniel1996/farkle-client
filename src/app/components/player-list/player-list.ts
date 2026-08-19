@@ -1,10 +1,11 @@
 import { Component, computed, Input } from '@angular/core';
 import { LobbyService } from '../../services/lobby.service';
 import { Player } from '../../shared/models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-player-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './player-list.html',
   styleUrl: './player-list.scss',
 })

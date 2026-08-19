@@ -29,4 +29,8 @@ export class GameService {
     endTurn(lobbyId: string) {
         this.socketService.onSendTask('endTurn', {lobbyId});
     }
+
+    restartGame(lobbyId: string) {
+        this.socketService.onSendTask('restartGame', {lobbyId});
+    }
 }
