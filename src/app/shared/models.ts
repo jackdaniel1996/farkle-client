@@ -1,3 +1,9 @@
+export interface SocketResponse {
+  success: boolean;
+  error?: string;
+}
+
+
 export interface Lobby {
   lobbyId: string;
   lobbyName: string;

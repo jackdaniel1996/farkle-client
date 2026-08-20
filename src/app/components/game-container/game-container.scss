@@ -68,6 +68,12 @@
     flex-direction: column;
 }
 
+.error {
+    font-size: 14px;
+    color: var(--red);
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .container {
         width: 100%;

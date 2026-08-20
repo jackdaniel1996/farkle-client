@@ -8,6 +8,12 @@
             <div class="lobby-info-wrapper">
                 <ng-content></ng-content>
             </div>
+            @if(lobbyService.errorMessage().length > 0 || gameService.errorMessage().length > 0) {
+            <div class="error">
+                <div>{{ lobbyService.errorMessage() }}</div>
+                <div>{{ gameService.errorMessage() }}</div>
+            </div>
+            }
         </div>
         @if(showPlayerList) {
         <app-player-list [showScoreboard]="showScoreboard"></app-player-list>

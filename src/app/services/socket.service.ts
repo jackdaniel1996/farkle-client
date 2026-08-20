@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
+import { SocketResponse } from '../shared/models';
 
 
 @Injectable({
@@ -24,19 +25,8 @@ export class SocketService {
         this.socket?.disconnect();
     }
 
-    joinLobby(lobbyId: string, username: string, password: string, socketId: string, id?: string) {
-        const params = {
-                lobbyId,
-                username,
-                password,
-                socketId,
-                id
-            }
-        this.socket?.emit("joinLobby", params);
-    }
-
-    onSendTask(task: string, params: {}) {
-        this.socket?.emit(task, params);
+    onSendTask(task: string, params: {}, callback?: (response: SocketResponse) => void) {
+        this.socket?.emit(task, params, callback);
     }
     
     onReceiveTask(task: string, callback: (param: any) => void) {

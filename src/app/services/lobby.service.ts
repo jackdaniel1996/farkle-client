@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { SocketService } from './socket.service';
 import { Router } from '@angular/router';
-import { GameState, Lobby, Player } from '../shared/models';
+import { GameState, Lobby, Player, SocketResponse } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ export class LobbyService {
         private socketService: SocketService,
         private router: Router,
     ) {}
-
+    
+    errorMessage = signal<string>('');
     activeLobby = signal<Lobby | null>(null);
     player = signal<Player | null>(null);
 
@@ -76,13 +77,21 @@ export class LobbyService {
 
             });
 
-            this.socketService.joinLobby(
+            this.socketService.onSendTask("joinLobby", {
                 lobbyId,
                 username,
                 password,
-                socket.id,
-                id ? id : savedPlayerId,
-            );
+                socketId: socket.id,
+                id: id ? id : savedPlayerId,
+            }, (response: SocketResponse) => {
+                if (!response.success) {
+                    console.error(response.error);
+                    this.errorMessage.set(response.error ?? "Fehler beim beitreten der Lobby");
+                    return;
+                } else {
+                    this.errorMessage.set('');
+                }
+            })
         }
     }
 
@@ -112,6 +121,15 @@ export class LobbyService {
     }
 
     startGame(lobbyId: string, maxPoints: number) {  
-        this.socketService.onSendTask('startGame', {lobbyId, maxPoints})
+        this.socketService.onSendTask('startGame', {lobbyId, maxPoints}, (response: SocketResponse) => {
+                if (!response.success) {
+                    console.error(response.error);
+                    this.errorMessage.set(response.error ?? "Fehler beim starten des Spiels");
+                    return;
+                } else {
+                    this.errorMessage.set('');
+                }
+            }
+        );
     }
 }
