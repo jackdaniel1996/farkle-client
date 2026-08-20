@@ -43,8 +43,24 @@
     font-family: var(--font-germania);
     font-size: 3.5rem;
     text-align: center;
-    border-bottom: 2px solid var(--tertiary-color);
+}
+
+.headline-wrapper {
+    display: flex;
+    flex-direction: column;
     padding-bottom: 20px;
+    border-bottom: 2px solid var(--tertiary-color);
+}
+
+.rules {
+    background: transparent;
+    font-size: 14px;
+    color: inherit;
+    border: 0;
+    font-family: inherit;
+    text-decoration: underline;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .lobby-info-wrapper {

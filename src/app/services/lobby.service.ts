@@ -50,28 +50,31 @@ export class LobbyService {
             this.updateLobby(lobby);
         });
 
+        // try savedPlayerId when joining to reconnect
+        const savedPlayerId = localStorage.getItem('playerId') ?? undefined;
+
         const socket = this.socketService.socket;
         if (socket?.id) {
             console.log('socket', socket, lobbyId)
 
             // user joined
             this.socketService.onReceiveTask("joinedLobby", player => {
-                if(id === undefined && this.player() === null) {
+                this.player.set({
+                    id: player.id,
+                    socketId: player.socketId,
+                    username: player.username,
+                    connected: true,
+                })
+                console.log('game-joined', this.activeLobby(), id ? id : savedPlayerId, this.activeLobby()?.status == 'waiting' )
+                if((id ? id : savedPlayerId) === undefined || this.activeLobby()?.status == 'waiting') {
                     // new player
-                    this.player.set({
-                        id: player.id,
-                        socketId: player.socketId,
-                        username: player.username,
-                        connected: true,
-                    })                
+                    this.router.navigate(['/lobby']);
                     localStorage.setItem('playerId', player.id);
+                } else {
+                    this.router.navigate(['/game']);
                 }
 
-                this.router.navigate(['/lobby']);
             });
-
-            // try savedPlayerId when joining to reconnect
-            const savedPlayerId = localStorage.getItem('playerId') ?? undefined;
 
             this.socketService.joinLobby(
                 lobbyId,

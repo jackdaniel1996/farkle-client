@@ -1,6 +1,6 @@
 <section class="hint-container">
     @if(game()?.status === 'finished') {
-    Das Spiel ist vorbei, {{ (activePlayer()?.username ?? '') }} hat gewonnen!
+    Das Spiel ist vorbei, {{ (winner()?.username ?? '') }} hat gewonnen!
     } @else {
     @if(game()?.farkled) {
     <span>

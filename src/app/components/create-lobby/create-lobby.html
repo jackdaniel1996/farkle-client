@@ -31,7 +31,15 @@
     }
 
     @if(selection() == "create") {
-    <button class="btn" (click)="createLobby()">Erstellen</button>
+    <button class="btn" (click)="createLobby()">
+        <span>Erstellen</span>
+        @if(loading()) {
+        <app-loading-spinner></app-loading-spinner>
+        }
+    </button>
+    @if(loading()) {
+    <div class="loading-hint">Das erstellen der Lobby kann ggf. etwas dauern.</div>
+    }
     } @else {
     <button class="btn" (click)="joinLobby()">Beitreten</button>
     }

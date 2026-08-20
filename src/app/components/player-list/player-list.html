@@ -3,6 +3,7 @@
         <div class="lobby-text">Spieler</div>
         @if(showScoreboard) {
         <div class="lobby-text">Punkte</div>
+        <div class="lobby-text">Züge</div>
         }
     </div>
     @if(showScoreboard) {
@@ -12,9 +13,8 @@
             <!-- <div class="player-active {{ player.connected ? 'active': 'inactive'}}"></div> -->
             <div class="player-name">{{ player.username }}</div>
         </div>
-        @if(showScoreboard) {
         <div class="player-score">{{ player.score }}</div>
-        }
+        <div class="player-score">{{ player.turns }}</div>
     </div>
     }
     } @else {

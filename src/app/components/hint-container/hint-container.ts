@@ -27,5 +27,11 @@ export class HintContainer {
     const diceValues = this.game()?.dice.filter((d) => d.selectable && !d.scored).map((d) => d.value);
     const sorted = diceValues?.sort((a, b) =>  a - b);
     return sorted?.join('-') ?? '';
-  })
+  });
+
+  winner = computed(() => {
+    return this.game()?.players.reduce((highest, player) =>
+        player.score > highest.score ? player : highest
+    );
+  });
 }
