@@ -38,6 +38,8 @@ export class LobbyComponent implements OnInit {
       });
       console.log('startGame', this.lobbyService.activeLobby())
     });
+
+    this.lobbyService.rejoinLobby();
   }
 
   startGame() {

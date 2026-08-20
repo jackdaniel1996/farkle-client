@@ -3,6 +3,12 @@ export interface SocketResponse {
   error?: string;
 }
 
+export interface SavedLobbyDetails {
+  username: string;
+  playerId: string;
+  lobbyId:  string;
+  password: string;
+}
 
 export interface Lobby {
   lobbyId: string;

@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { SocketService } from './socket.service';
 import { Router } from '@angular/router';
-import { GameState, Lobby, Player, SocketResponse } from '../shared/models';
+import { GameState, Lobby, Player, SavedLobbyDetails, SocketResponse } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,12 @@ export class LobbyService {
 
                     this.activeLobby.set(lobby);
                     this.player.set(player);
-                    localStorage.setItem('playerId', player.id);
+                    localStorage.setItem('lobbyDetails', JSON.stringify({
+                        playerId: player.id,
+                        username: player.username,
+                        lobbyId: lobby.lobbyId,
+                        password: password
+                    }));
 
                     this.joinLobby(lobby.lobbyId, player.id, username, password);
 
@@ -52,7 +57,8 @@ export class LobbyService {
         });
 
         // try savedPlayerId when joining to reconnect
-        const savedPlayerId = localStorage.getItem('playerId') ?? undefined;
+        const savedLobbyDetails: SavedLobbyDetails | undefined = JSON.parse(localStorage.getItem('lobbyDetails') ?? 'null') ?? undefined;
+        const savedPlayerId = savedLobbyDetails?.playerId ?? undefined;
 
         const socket = this.socketService.socket;
         if (socket?.id) {
@@ -70,7 +76,12 @@ export class LobbyService {
                 if((id ? id : savedPlayerId) === undefined || this.activeLobby()?.status == 'waiting') {
                     // new player
                     this.router.navigate(['/lobby']);
-                    localStorage.setItem('playerId', player.id);
+
+                    localStorage.setItem('lobbyDetails', JSON.stringify({
+                        playerId: player.id,
+                        lobbyId:  this.activeLobby()?.lobbyId ?? undefined,
+                        password: password
+                    }));
                 } else {
                     this.router.navigate(['/game']);
                 }
@@ -91,6 +102,8 @@ export class LobbyService {
                 } else {
                     this.errorMessage.set('');
                 }
+
+                console.log('-------Joined', username)
             })
         }
     }
@@ -131,5 +144,23 @@ export class LobbyService {
                 }
             }
         );
+    }
+
+    // rejoin after reload if possible
+    rejoinLobby() {
+        if(this.activeLobby() === null) {
+            const storedLobbyDetails = localStorage.getItem('lobbyDetails');
+            if (!storedLobbyDetails) {
+                return;
+            }
+    
+            const lobbyDetails: SavedLobbyDetails = JSON.parse(storedLobbyDetails);
+            this.joinLobby(
+                lobbyDetails.lobbyId,
+                lobbyDetails.playerId,
+                lobbyDetails.username,
+                lobbyDetails.password,
+            );
+        }
     }
 }
