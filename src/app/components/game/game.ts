@@ -39,6 +39,8 @@ export class Game implements OnInit {
   }
 
   ngOnInit() {
+    this.lobbyService.rejoinLobby();
+    
     this.socketService.onReceiveTask("diceRolled", gameState => {
       console.log('dice-rolled:', gameState);
       this.lobbyService.updateGamestate(gameState);

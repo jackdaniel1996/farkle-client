@@ -1,3 +1,15 @@
+export interface SocketResponse {
+  success: boolean;
+  error?: string;
+}
+
+export interface SavedLobbyDetails {
+  username: string;
+  playerId: string;
+  lobbyId:  string;
+  password: string;
+}
+
 export interface Lobby {
   lobbyId: string;
   lobbyName: string;
@@ -29,6 +41,7 @@ export interface GamePlayer {
   username: string;
   score: number;
   connected: boolean;
+  turns: number;
 }
 
 export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;

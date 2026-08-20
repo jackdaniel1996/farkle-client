@@ -1,13 +1,23 @@
 <section class="game-section">
     <div class="container" [ngClass]="{'scoreboard': showScoreboard}">
         <div class="lobby-wrapper" [ngClass]="{'showPlayerList': showPlayerList}">
-            <div class="headline">Farkle</div>
+            <div class="headline-wrapper">
+                <div class="headline">Farkle</div>
+                <button class="rules" (click)="openGameRules()">Spielregeln</button>
+            </div>
             <div class="lobby-info-wrapper">
                 <ng-content></ng-content>
             </div>
+            @if(lobbyService.errorMessage().length > 0 || gameService.errorMessage().length > 0) {
+            <div class="error">
+                <div>{{ lobbyService.errorMessage() }}</div>
+                <div>{{ gameService.errorMessage() }}</div>
+            </div>
+            }
         </div>
         @if(showPlayerList) {
         <app-player-list [showScoreboard]="showScoreboard"></app-player-list>
         }
     </div>
 </section>
+<app-overlay #overlay />

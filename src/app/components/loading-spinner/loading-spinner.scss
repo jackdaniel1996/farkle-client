@@ -1,0 +1,64 @@
+.spinner-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(44, 57, 48, 0.55); // primary-color mit Transparenz
+    border-radius: inherit;
+
+    &.overlay--light {
+        background: rgba(220, 215, 201, 0.55); // color-light mit Transparenz
+    }
+}
+
+.dice {
+    position: relative;
+    border-radius: 6px;
+    background: var(--color-light, #dcd7c9);
+    border: 2px solid var(--tertiary-color, #a27b5c);
+    animation: roll 0.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    display: grid;
+    place-items: center;
+}
+
+.pip {
+    width: 22%;
+    height: 22%;
+    border-radius: 50%;
+    // background: var(--secondary-color, #3f4f44);
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: 22%;
+        height: 22%;
+        border-radius: 50%;
+        background: var(--tertiary-color-light, #c0926d);
+    }
+
+    &::before {
+        top: 18%;
+        left: 18%;
+    }
+
+    &::after {
+        bottom: 18%;
+        right: 18%;
+    }
+}
+
+@keyframes roll {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(0.85);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
